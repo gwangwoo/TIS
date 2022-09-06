@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class _boj_24479 {
   static int V,E,S;
@@ -25,7 +22,7 @@ public class _boj_24479 {
       arl[u].add(v);
       arl[v].add(u);
     }
-    for(int i = 1 ; i <= V ; i++) Collections.sort(arl[i]);
+    for(int i = 1 ; i <= V ; i++) Collections.sort(arl[i], (o1, o2) -> o2-o1);
 
     dfs(S);
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
