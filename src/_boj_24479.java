@@ -1,44 +1,54 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class _boj_24479 {
-  static int V,E,S;
-  static List<Integer>[] arl;
-  static int visited[];
-  static int N = 1;
-  public static void main(String[] args) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    StringTokenizer st = new StringTokenizer(br.readLine());
-    V = Integer.parseInt(st.nextToken());
-    E = Integer.parseInt(st.nextToken());
-    S = Integer.parseInt(st.nextToken());
-    arl = new ArrayList[V+1];
-    visited = new int[V+1];
-    for(int i = 1 ; i <= V ; i++) arl[i] = new ArrayList<>();
-    for(int i = 0 ; i < E ; i++) {
-      st = new StringTokenizer(br.readLine());
-      int u = Integer.parseInt(st.nextToken());
-      int v = Integer.parseInt(st.nextToken());
-      arl[u].add(v);
-      arl[v].add(u);
-    }
-    for(int i = 1 ; i <= V ; i++) Collections.sort(arl[i], (o1, o2) -> o2-o1);
+    static int N, M, R;
+    static List<Integer> arl[];
+    static int visited[];
+    static int count;
 
-    dfs(S);
-    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    for(int i = 1 ; i <= V ; i++) {
-      bw.write(visited[i]+"\n");
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        R = Integer.parseInt(st.nextToken());
+        arl = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) {
+            arl[i] = new ArrayList<>();
+        }
+        visited = new int[N + 1];
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            arl[u].add(v);
+            arl[v].add(u);
+        }
+        for (int i = 1; i <= N; i++) {
+            Collections.sort(arl[i]);
+        }
+        dfs(R);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        for (int i = 1; i <= N; i++) {
+            bw.write(visited[i]+"\n");
+        }
+        bw.flush();
+        bw.close();
     }
-    bw.flush();
-    bw.close();
-  }
 
-  static void dfs(int node) {
-    if(visited[node] != 0) return;
-    visited[node] = N++;
-
-    for(int y : arl[node]) {
-      dfs(y);
+    private static void dfs(int s) {
+        if(visited[s] != 0) return;
+        visited[s] = ++count;
+        for (int y : arl[s]) {
+            dfs(y);
+        }
     }
-  }
 }
