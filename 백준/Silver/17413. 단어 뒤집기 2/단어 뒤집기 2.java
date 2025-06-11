@@ -31,6 +31,8 @@ public class Main {
         System.out.println(answer);
     }
 
+    
+    
     private static void stackClear(Stack<Character> stk, StringBuilder answer) {
         while(!stk.isEmpty()) {
             answer.append(stk.pop());
