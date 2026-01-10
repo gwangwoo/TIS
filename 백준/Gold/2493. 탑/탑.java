@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -19,14 +21,6 @@ public class Main {
         for (int i = 1 ; i < N ; i++) {
             while (!stk.isEmpty() && stk.peek().height < arr[i]) {
                 stk.pop();
-                if (stk.isEmpty()) { // 스택 내부에 자기보다 큰 타워가 없음
-                    stk.add(new Tower(i, arr[i]));
-                    break;
-                } else if (stk.peek().height > arr[i]) {    // 스택내부에서 자신보다 큰 타워를 만남
-                    answer[i] = stk.peek().idx+1;
-                    stk.add(new Tower(i, arr[i]));
-                    break;
-                }
             }
             if (stk.isEmpty()) {
                 answer[i] = 0;
@@ -36,11 +30,12 @@ public class Main {
             }
             stk.add(new Tower(i, arr[i]));
         }
-
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         for (int i = 0 ; i < N ; i++) {
-            System.out.print(answer[i] + " ");
+            bw.write(answer[i] + " ");
         }
-
+        bw.flush();
+        bw.close();
     }
     static class Tower {
         int idx;
